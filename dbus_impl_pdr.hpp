@@ -1,13 +1,14 @@
 #pragma once
 
+#include "libpldm/pdr.h"
+#include "libpldm/platform.h"
+
 #include "xyz/openbmc_project/PLDM/PDR/server.hpp"
 
 #include <sdbusplus/bus.hpp>
 #include <sdbusplus/server/object.hpp>
-#include <vector>
 
-#include "libpldm/pdr.h"
-#include "libpldm/platform.h"
+#include <vector>
 
 namespace pldm
 {
@@ -50,6 +51,15 @@ class Pdr : public PdrIntf
     std::vector<std::vector<uint8_t>>
         findStateEffecterPDR(uint8_t tid, uint16_t entityID,
                              uint16_t stateSetId) override;
+
+    /** @brief Implementation for PdrIntf.FindStateSensorPDR
+     *  @param[in] tid - PLDM terminus ID.
+     *  @param[in] entityID - entity that can be associated with PLDM State set.
+     *  @param[in] stateSetId - value that identifies PLDM State set.
+     */
+    std::vector<std::vector<uint8_t>>
+        findStateSensorPDR(uint8_t tid, uint16_t entityID,
+                           uint16_t stateSetId) override;
 
   private:
     /** @brief pointer to BMC's primary PDR repo */

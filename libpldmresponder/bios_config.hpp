@@ -1,18 +1,19 @@
 #pragma once
 
+#include "bios_table.h"
+
 #include "bios_attribute.hpp"
 #include "bios_table.hpp"
+
+#include <nlohmann/json.hpp>
 
 #include <functional>
 #include <iostream>
 #include <memory>
-#include <nlohmann/json.hpp>
 #include <optional>
 #include <set>
 #include <string>
 #include <vector>
-
-#include "bios_table.h"
 
 namespace pldm
 {
@@ -156,6 +157,16 @@ class BIOSConfig
      *  @return The table, std::nullopt if loading fails
      */
     std::optional<Table> loadTable(const fs::path& path);
+
+    /** @brief Check the attribute value to update
+     *  @param[in] attrValueEntry - The attribute value entry to update
+     *  @param[in] attrEntry - The attribute table entry
+     *  @param[in] stringTable - The string  table
+     *  @return pldm_completion_codes
+     */
+    int checkAttrValueToUpdate(
+        const pldm_bios_attr_val_table_entry* attrValueEntry,
+        const pldm_bios_attr_table_entry* attrEntry, Table& stringTable);
 };
 
 } // namespace bios
